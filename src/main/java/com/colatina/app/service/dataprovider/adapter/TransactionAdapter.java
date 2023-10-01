@@ -2,6 +2,7 @@ package com.colatina.app.service.dataprovider.adapter;
 
 import com.colatina.app.service.configuration.mapper.TransactionMapper;
 import com.colatina.app.service.core.domain.TransactionDomain;
+import com.colatina.app.service.core.exception.BusinessException;
 import com.colatina.app.service.core.gateway.TransactionGateway;
 import com.colatina.app.service.dataprovider.repository.TransactionRepository;
 import lombok.RequiredArgsConstructor;

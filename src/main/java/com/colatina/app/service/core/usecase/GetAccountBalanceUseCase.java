@@ -1,6 +1,7 @@
 package com.colatina.app.service.core.usecase;
 
 import com.colatina.app.service.core.gateway.AccountGateway;
+import com.colatina.app.service.core.gateway.WalletGateway;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -11,11 +12,11 @@ import java.util.Locale;
 @RequiredArgsConstructor
 public class GetAccountBalanceUseCase {
 
-    private final AccountGateway accountGateway;
+    private final WalletGateway walletGateway;
 
     public String getAccountBalance(final Integer accountId) {
         return NumberFormat.getInstance(new Locale("pt", "BR"))
-                .format(accountGateway.findBalanceByAccountId(accountId));
+                .format(walletGateway.getWalletBalance(accountId));
     }
 
 }

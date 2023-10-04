@@ -38,26 +38,16 @@ public class AccountDomain {
     @Past
     private LocalDate birthDate;
 
-    public boolean isAdult(){
-        // Obter a Data Atual
+    private WalletDomain walletDomain;
+
+    public int getAge(){
         LocalDate currentDate = LocalDate.now();
+        return Period.between(this.getBirthDate(), currentDate).getYears();
+    }
 
-        // Obter a diferenca entre as duas datas
-        int age = Period.between(this.getBirthDate(), currentDate).getYears();
-
+    public boolean isAdult(){
         //Retorno 'True' se for maior que 18 anos
-        return age > 18;
+        return this.getAge() > 18;
     }
 
-    public void blockAccount() {
-        this.status = AccountStatus.BLOCKED;
-    }
-
-    public void activeAccount() {
-        this.status = AccountStatus.ACTIVE;
-    }
-
-    public void inactiveAccount() {
-        this.status = AccountStatus.INACTIVE;
-    }
 }

@@ -19,10 +19,10 @@ public class ChangeStatusUserCase {
 
         // Se a conta estiver Ativada, sera bloqueada
         if (findedAccount.getStatus() == AccountStatus.ACTIVE){
-            findedAccount.blockAccount();
+            findedAccount.setStatus(AccountStatus.BLOCKED);
         } else {
             // Caso contrario sera Ativada
-            findedAccount.activeAccount();
+            findedAccount.setStatus(AccountStatus.ACTIVE);
         }
 
         // Atualizar conta com novo Status

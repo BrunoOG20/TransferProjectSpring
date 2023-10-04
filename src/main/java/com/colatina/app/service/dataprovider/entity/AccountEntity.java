@@ -1,15 +1,12 @@
 package com.colatina.app.service.dataprovider.entity;
 
-import com.colatina.app.service.core.domain.WalletDomain;
-import liquibase.pro.packaged.A;
+
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 
 @Getter
 @Setter
@@ -38,8 +35,8 @@ public class AccountEntity implements Serializable {
     @Column(name = "birth_date")
     private LocalDate birthDate;
 
-    @OneToMany(mappedBy = "account",fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private List<WalletEntity> wallets = new ArrayList<>();
+    @OneToOne(mappedBy = "account",fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private WalletEntity wallet;
 
 
 }

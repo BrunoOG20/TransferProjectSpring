@@ -24,8 +24,6 @@ public class AccountController {
     private final CreateAccountUseCase createAccountUseCase;
     private final ChangeStatusUserCase changeStatusUserCase;
 
-    private final AccountRepository rep;
-
     @PostMapping
     public ResponseEntity<Void> create(@RequestBody @Valid AccountDomain data) {
         createAccountUseCase.execute(data);
@@ -33,7 +31,7 @@ public class AccountController {
     }
 
     @PutMapping("/status/{id}")
-    public ResponseEntity<Void> updateStatus(@PathVariable @NotNull @Positive int id) {
+    public ResponseEntity<Void> updateStatus(@PathVariable @NotNull @Positive Integer id) {
         changeStatusUserCase.execute(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }

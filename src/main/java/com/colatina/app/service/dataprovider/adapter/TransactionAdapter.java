@@ -2,26 +2,17 @@ package com.colatina.app.service.dataprovider.adapter;
 
 import com.colatina.app.service.configuration.mapper.AccountMapper;
 import com.colatina.app.service.configuration.mapper.TransactionMapper;
-import com.colatina.app.service.configuration.mapper.WalletMapper;
 import com.colatina.app.service.core.domain.AccountDomain;
-import com.colatina.app.service.core.domain.AccountInfoDomain;
 import com.colatina.app.service.core.domain.TransactionDomain;
-import com.colatina.app.service.core.domain.WalletDomain;
-import com.colatina.app.service.core.exception.BusinessException;
 import com.colatina.app.service.core.gateway.TransactionGateway;
 import com.colatina.app.service.dataprovider.entity.AccountEntity;
 import com.colatina.app.service.dataprovider.entity.TransactionEntity;
-import com.colatina.app.service.dataprovider.entity.WalletEntity;
-import com.colatina.app.service.dataprovider.repository.AccountRepository;
 import com.colatina.app.service.dataprovider.repository.TransactionRepository;
-import com.colatina.app.service.dataprovider.repository.WalletRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -34,9 +25,6 @@ public class TransactionAdapter implements TransactionGateway {
     private final TransactionMapper transactionMapper;
 
     private final AccountMapper accountMapper;
-    private final AccountRepository accountRepository;
-
-    private final WalletRepository walletRepository;
 
     @Override
     public List<TransactionDomain> getAccountStatement(
@@ -81,10 +69,12 @@ public class TransactionAdapter implements TransactionGateway {
     }
 
     @Override
-    public void saveTransaction(TransactionDomain transactionDomain) {
+    public TransactionDomain saveTransaction(TransactionDomain transactionDomain) {
         TransactionEntity transactionEntity = transactionMapper.toEntity(transactionDomain);
 
         transactionRepository.save(transactionEntity);
+
+        return transactionMapper.toDto(transactionEntity);
     }
 
     private TransactionEntity createTransactionEntity(AccountEntity sender, AccountEntity receiver, BigDecimal value){

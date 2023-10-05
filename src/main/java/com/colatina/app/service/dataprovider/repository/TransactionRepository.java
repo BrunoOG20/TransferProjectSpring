@@ -6,13 +6,14 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Repository
 public interface TransactionRepository extends JpaRepository<TransactionEntity, Integer> {
-    List<TransactionEntity> findAllByAccountOriginIdAndCreatedAtBetween(Integer accountId, LocalDateTime startDate, LocalDateTime endDate);
+    List<TransactionEntity> findAllByAccountOriginIdAndCreatedAtBetween(Integer accountId,
+                                                                        LocalDateTime startDate,
+                                                                        LocalDateTime endDate);
 
     @Query("SELECT transaction FROM TransactionEntity transaction WHERE transaction.accountOrigin.id = :accountId " +
             "AND transaction.status LIKE 'PROCESSED' ")

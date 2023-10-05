@@ -35,7 +35,7 @@ public class TransactionController {
         return new ResponseEntity<>(accountStatement, accountStatement.isEmpty() ? HttpStatus.NO_CONTENT : HttpStatus.OK);
     }
 
-    @GetMapping("/account-statement-status-not-processed/{account_id}")
+    @GetMapping("/account-statement-status-refused/{account_id}")
     public ResponseEntity<List<TransactionDomain>> getAccountStatementRefused(@PathVariable("account_id") Integer accountId) {
         final List<TransactionDomain> accountStatement = getAccountStatementUseCase.getAllAccountStatementRefused(accountId);
         return new ResponseEntity<>(accountStatement, accountStatement.isEmpty() ? HttpStatus.NO_CONTENT : HttpStatus.OK);

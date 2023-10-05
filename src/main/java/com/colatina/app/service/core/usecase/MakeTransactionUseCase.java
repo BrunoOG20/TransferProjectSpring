@@ -3,6 +3,7 @@ package com.colatina.app.service.core.usecase;
 import com.colatina.app.service.core.domain.AccountDomain;
 import com.colatina.app.service.core.domain.TransactionDomain;
 import com.colatina.app.service.core.domain.enumeration.AccountStatus;
+import com.colatina.app.service.core.domain.enumeration.TransactionStatus;
 import com.colatina.app.service.core.exception.BusinessException;
 import com.colatina.app.service.core.gateway.AccountGateway;
 import com.colatina.app.service.core.gateway.TransactionGateway;
@@ -45,12 +46,14 @@ public class MakeTransactionUseCase {
             walletGateway.updateAccountBalance(sender, newSenderBalance);
             walletGateway.updateAccountBalance(receiver, newReceiverBalance);
 
-            transactionGateway.saveTransaction(newTransaction);
+            newTransaction.setStatus(TransactionStatus.PROCESSED);
 
-        } catch (Error error){
-            throw new BusinessException("Ocorreu um erro durante a transacao " + error);
+        } catch (BusinessException e){
+            newTransaction.setStatus(TransactionStatus.REFUSED);
+            throw new BusinessException("Ocorreu um erro durante a transacao ");
         }
-        return newTransaction;
+
+        return transactionGateway.saveTransaction(newTransaction);
 
     }
 
@@ -59,7 +62,7 @@ public class MakeTransactionUseCase {
     }
 
     private boolean verifyBalanceAccountSender(AccountDomain account, BigDecimal value){
-        int result = walletGateway.getWalletBalance(account.getId()).compareTo(value);
-        return result > 0;
+        int result = accountGateway.getWalletBalance(account.getId()).compareTo(value);
+        return result >= 0;
     }
 }

@@ -37,14 +37,6 @@ public class WalletAdapter implements WalletGateway {
     }
 
     @Override
-    public BigDecimal getWalletBalance(Integer accountId) {
-        AccountEntity entity = accountRepository.findById(accountId)
-                .orElseThrow(() -> new BusinessException("Conta nao encontrada"));
-
-        return walletRepository.findBalanceByAccountId(accountId);
-    }
-
-    @Override
     public BigDecimal debitTheAccount(AccountDomain account, BigDecimal value){
         AccountEntity accountEntity = accountMapper.toEntity(account);
         BigDecimal currentBalance = walletRepository.findBalanceByAccountId(accountEntity.getId());

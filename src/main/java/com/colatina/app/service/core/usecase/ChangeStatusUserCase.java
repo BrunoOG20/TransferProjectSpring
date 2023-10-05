@@ -13,19 +13,15 @@ public class ChangeStatusUserCase {
 
     private final AccountGateway accountGateway;
 
-    public void execute(int accountId){
-        // Buscar Usuario
+    public void execute(Integer accountId){
         AccountDomain findedAccount = accountGateway.findById(accountId);
 
-        // Se a conta estiver Ativada, sera bloqueada
         if (findedAccount.getStatus() == AccountStatus.ACTIVE){
             findedAccount.setStatus(AccountStatus.BLOCKED);
         } else {
-            // Caso contrario sera Ativada
             findedAccount.setStatus(AccountStatus.ACTIVE);
         }
 
-        // Atualizar conta com novo Status
         accountGateway.update(findedAccount);
     }
 }

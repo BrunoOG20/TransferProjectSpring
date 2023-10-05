@@ -12,11 +12,11 @@ import java.util.Locale;
 @RequiredArgsConstructor
 public class GetAccountBalanceUseCase {
 
-    private final WalletGateway walletGateway;
+    private final AccountGateway accountGateway;
 
     public String getAccountBalance(final Integer accountId) {
         return NumberFormat.getInstance(new Locale("pt", "BR"))
-                .format(walletGateway.getWalletBalance(accountId));
+                .format(accountGateway.getWalletBalance(accountId));
     }
 
 }

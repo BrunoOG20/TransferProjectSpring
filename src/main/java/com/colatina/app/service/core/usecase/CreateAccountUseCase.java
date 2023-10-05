@@ -18,17 +18,14 @@ public class CreateAccountUseCase {
 
     public void execute(AccountDomain account) {
 
-        // Verificar se o Usuario tem a idade maior que 18 anos
         if (!account.isAdult()){
             throw new BusinessException("Menor de Idade");
         }
 
-        // Verificar se o CPF e valido
         if (negativeCpfGateway.isNegativeCpf(account.getDocument())){
             throw new BusinessException("Cpf Negativado");
         }
 
-        // Criar conta
         AccountDomain newAccount = accountGateway.create(account);
         walletGateway.createWalletToAccount(newAccount);
     }
